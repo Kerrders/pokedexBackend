@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Move;
+use App\Models\Pokemon;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/pokemons', function () {
+    return Pokemon::with(['species', 'speciesNames'])->paginate(25);
 });
