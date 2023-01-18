@@ -64,4 +64,12 @@ class Move extends Model
 		'contest_effect_id',
 		'super_contest_effect_id'
 	];
+
+    /**
+     * Get move names
+     */
+    public function names()
+    {
+        return $this->hasMany(MoveName::class, 'move_id', 'id');
+    }
 }

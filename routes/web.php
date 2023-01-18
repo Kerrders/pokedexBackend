@@ -2,8 +2,6 @@
 
 use App\Models\Move;
 use App\Models\Pokemon;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pokemons', function () {
-    return Pokemon::with(['species', 'speciesNames'])->paginate(25);
+Route::get('/pokemon', function () {
+    return Pokemon::with(['species', 'speciesNames', 'moves'])->paginate(25);
+});
+Route::get('/pokemon/{id}', function ($id) {
+    return Pokemon::with(['species', 'speciesNames', 'moves'])->where('id', '=', $id)->firstOrFail();
+});
+
+Route::get('/move', function () {
+    return Move::with(['names'])->get();
+});
+Route::get('/move/{id}', function ($id) {
+    return Move::with(['names'])->where('id', '=', $id)->firstOrFail();
 });
