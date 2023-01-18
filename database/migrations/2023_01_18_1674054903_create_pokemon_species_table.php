@@ -10,9 +10,9 @@ class CreatePokemonSpeciesTable extends Migration
     {
         Schema::create('pokemon_species', function (Blueprint $table) {
             $table->integer('id')->nullable();
-            $table->text('identifier');
+            $table->text('identifier')->nullable();
             $table->integer('generation_id')->nullable();
-            $table->text('evolves_from_species_id');
+            $table->text('evolves_from_species_id')->nullable();
             $table->integer('evolution_chain_id')->nullable();
             $table->integer('color_id')->nullable();
             $table->integer('shape_id')->nullable();
@@ -28,7 +28,7 @@ class CreatePokemonSpeciesTable extends Migration
             $table->integer('is_legendary')->nullable();
             $table->integer('is_mythical')->nullable();
             $table->integer('order')->nullable();
-            $table->text('conquest_order');
+            $table->text('conquest_order')->nullable();
         });
     }
 

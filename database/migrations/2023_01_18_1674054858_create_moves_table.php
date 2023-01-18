@@ -20,7 +20,7 @@ class CreateMovesTable extends Migration
             $table->integer('target_id')->nullable();
             $table->integer('damage_class_id')->nullable();
             $table->integer('effect_id')->nullable();
-            $table->text('effect_chance');
+            $table->text('effect_chance')->nullable();
             $table->integer('contest_type_id')->nullable();
             $table->integer('contest_effect_id')->nullable();
             $table->integer('super_contest_effect_id')->nullable();

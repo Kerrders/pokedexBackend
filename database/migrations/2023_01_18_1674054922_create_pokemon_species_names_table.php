@@ -11,8 +11,8 @@ class CreatePokemonSpeciesNamesTable extends Migration
         Schema::create('pokemon_species_names', function (Blueprint $table) {
             $table->integer('pokemon_species_id')->nullable();
             $table->integer('local_language_id')->nullable();
-            $table->text('name');
-            $table->text('genus');
+            $table->text('name')->nullable();
+            $table->text('genus')->nullable();
         });
     }
 

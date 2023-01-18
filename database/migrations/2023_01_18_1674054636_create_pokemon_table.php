@@ -14,7 +14,7 @@ class CreatePokemonTable extends Migration
             $table->integer('species_id')->nullable();
             $table->integer('height')->nullable();
             $table->integer('weight')->nullable();
-            $table->integer('base_experience')->nullable();
+            $table->integer('base_experience')->nullable()->default(0);
             $table->integer('order')->nullable();
             $table->integer('is_default')->nullable();
         });

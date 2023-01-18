@@ -11,7 +11,7 @@ class CreateMoveNamesTable extends Migration
         Schema::create('move_names', function (Blueprint $table) {
             $table->integer('move_id')->nullable();
             $table->integer('local_language_id')->nullable();
-            $table->text('name');
+            $table->text('name')->nullable();
         });
     }
 

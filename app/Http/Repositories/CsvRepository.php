@@ -12,6 +12,9 @@ class CsvRepository implements CsvRepositoryInterface {
         fwrite($handle, $content);
         rewind($handle);
         while (($row = fgetcsv($handle, 0, $separator)) !== false) {
+            $row = array_map(function($val) {
+                return empty($val) ? null : $val;
+            }, $row);
             if (!$header) {
                 $header = $row;
             } else {
