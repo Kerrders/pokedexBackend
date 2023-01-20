@@ -20,10 +20,10 @@ Route::get('/', function () {
 });
 
 Route::get('/pokemon', function () {
-    return Pokemon::with(['species', 'speciesNames', 'moves'])->paginate(25);
+    return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->paginate(25);
 });
 Route::get('/pokemon/{id}', function ($id) {
-    return Pokemon::with(['species', 'speciesNames', 'moves'])->where('id', '=', $id)->firstOrFail();
+    return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->where('id', '=', $id)->firstOrFail();
 });
 
 Route::get('/move', function () {

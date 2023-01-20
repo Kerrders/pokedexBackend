@@ -78,4 +78,12 @@ class PokemonSpecy extends Model
 		'order',
 		'conquest_order'
 	];
+
+    /**
+     * Get evolution
+     */
+    public function evolution()
+    {
+        return $this->hasOne(PokemonEvolution::class, 'id', 'evolution_chain_id');
+    }
 }
