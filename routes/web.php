@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\Move;
-use App\Models\Pokemon;
-use App\Models\PokemonEvolution;
-use App\Models\PokemonSpecy;
+use App\Http\Controllers\EvolutionController;
+use App\Http\Controllers\MoveController;
+use App\Http\Controllers\PokemonController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,23 +20,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pokemon', function () {
-    return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->paginate(25);
-});
-Route::get('/pokemon/{id}', function ($id) {
-    return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->where('id', '=', $id)->firstOrFail();
-});
+Route::get('/pokemon', [PokemonController::class, 'list']);
+Route::get('/pokemon/{id}', [PokemonController::class, 'show']);
 
-Route::get('/evolution/{id}', function ($id) {
-    return PokemonSpecy::where('evolution_chain_id', '=', $id)->get()->map(function ($pokemon) {
-        $pokemon->evolution = PokemonEvolution::where('evolved_species_id', '=', $pokemon->id)->first();
-        return $pokemon;
-    });
-});
+Route::get('/evolution/{id}', [EvolutionController::class, 'show']);
 
-Route::get('/move', function () {
-    return Move::with(['names'])->get();
-});
-Route::get('/move/{id}', function ($id) {
-    return Move::with(['names'])->where('id', '=', $id)->firstOrFail();
-});
+Route::get('/move', [MoveController::class, 'list']);
+Route::get('/move/{id}', [MoveController::class, 'show']);
