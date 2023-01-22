@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/pokemon', [PokemonController::class, 'list']);
-Route::get('/pokemon/{id}', [PokemonController::class, 'show']);
+Route::get('/pokemon/{identifier}', [PokemonController::class, 'show']);
 
 Route::get('/evolution/{id}', [EvolutionController::class, 'show']);
 

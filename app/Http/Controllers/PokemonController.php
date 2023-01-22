@@ -8,10 +8,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class PokemonController extends Controller
 {
     public function list(): LengthAwarePaginator {
-        return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->paginate(25);
+        return Pokemon::with(['speciesNames'])->paginate(50);
     }
 
-    public function show(int $id): Pokemon {
-        return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->where('id', '=', $id)->firstOrFail();
+    public function show(string $identifier): Pokemon {
+        return Pokemon::with(['species.evolution', 'speciesNames', 'moves'])->where('identifier', '=', $identifier)->firstOrFail();
     }
 }
