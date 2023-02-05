@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class PokemonStat
  *
- * @property int|null $pokemon_id
- * @property int|null $stat_id
- * @property int|null $base_stat
- * @property int|null $effort
+ * @property int $pokemon_id
+ * @property int $stat_id
+ * @property int $base_stat
+ * @property int $effort
  *
  * @package App\Models
  */
