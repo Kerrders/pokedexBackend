@@ -71,4 +71,12 @@ class Pokemon extends Model
     {
         return $this->hasMany(PokemonMove::class, 'pokemon_id', 'id');
     }
+
+    /**
+     * Get stats
+     */
+    public function stats()
+    {
+        return $this->hasMany(PokemonStat::class, 'pokemon_id', 'id');
+    }
 }
