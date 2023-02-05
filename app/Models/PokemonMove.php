@@ -39,4 +39,12 @@ class PokemonMove extends Model
 		'level',
 		'order'
 	];
+
+    /**
+     * Get move names
+     */
+    public function names()
+    {
+        return $this->hasMany(MoveName::class, 'move_id', 'move_id');
+    }
 }
