@@ -82,18 +82,32 @@ class Pokemon extends Model
         return $this->hasMany(PokemonStat::class, 'pokemon_id', 'id');
     }
 
+    public function types()
+    {
+        return $this->hasMany(PokemonType::class, 'pokemon_id', 'id');
+    }
+
     public function scopeWhereNameLike($query, $name) {
-        if($name) {
-            $query->whereHas('speciesNames', function ($speciesNameQuery) use($name){
-                $speciesNameQuery->where('name', 'like', '%'.$name.'%');
-            });
+        if(!$name) {
+            return $query;
         }
-        return $query;
+        return $query->whereHas('speciesNames', function ($speciesNameQuery) use($name){
+            $speciesNameQuery->where('name', 'like', '%'.$name.'%');
+        });
     }
 
     public function scopeWhereLanguageId($query, $langId) {
         return $query->whereHas('speciesNames', function ($speciesNameQuery) use($langId){
             $speciesNameQuery->where('local_language_id', '=', $langId);
+        });
+    }
+
+    public function scopeWhereTypeIn($query, $types) {
+        if (!count($types)) {
+            return $query;
+        }
+        return $query->whereHas('types', function ($typeQuery) use($types){
+            $typeQuery->whereIn('type_id', $types);
         });
     }
 }

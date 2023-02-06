@@ -11,6 +11,7 @@ use App\Models\PokemonMove;
 use App\Models\PokemonSpeciesName;
 use App\Models\PokemonSpecy;
 use App\Models\PokemonStat;
+use App\Models\PokemonType;
 use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 
@@ -28,7 +29,8 @@ class DatabaseSeeder extends Seeder
         "moves" => Move::class,
         "move_names" => MoveName::class,
         "pokemon_evolution" => PokemonEvolution::class,
-        "pokemon_stats" => PokemonStat::class
+        "pokemon_stats" => PokemonStat::class,
+        "pokemon_types" => PokemonType::class
     ];
 
     /**
