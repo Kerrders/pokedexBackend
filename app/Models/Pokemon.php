@@ -79,4 +79,19 @@ class Pokemon extends Model
     {
         return $this->hasMany(PokemonStat::class, 'pokemon_id', 'id');
     }
+
+    public function scopeWhereNameLike($query, $name) {
+        if($name) {
+            $query->whereHas('speciesNames', function ($speciesNameQuery) use($name){
+                $speciesNameQuery->where('name', 'like', '%'.$name.'%');
+            });
+        }
+        return $query;
+    }
+
+    public function scopeWhereLanguageId($query, $langId) {
+        return $query->whereHas('speciesNames', function ($speciesNameQuery) use($langId){
+            $speciesNameQuery->where('local_language_id', '=', $langId);
+        });
+    }
 }

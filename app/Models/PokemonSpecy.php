@@ -86,4 +86,12 @@ class PokemonSpecy extends Model
     {
         return $this->hasOne(PokemonEvolution::class, 'id', 'evolution_chain_id');
     }
+
+    /**
+     * Get species name
+     */
+    public function names()
+    {
+        return $this->hasMany(PokemonSpeciesName::class, 'pokemon_species_id', 'id');
+    }
 }
