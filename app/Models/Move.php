@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 /**
  * Class Move
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
 class Move extends Model
 {
     use HasFactory;
+    use Cachable;
 
 	protected $table = 'moves';
 	public $incrementing = false;

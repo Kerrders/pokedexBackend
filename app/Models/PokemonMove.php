@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PokemonMove extends Model
 {
+    use Cachable;
+
 	protected $table = 'pokemon_moves';
 	public $incrementing = false;
 	public $timestamps = false;
