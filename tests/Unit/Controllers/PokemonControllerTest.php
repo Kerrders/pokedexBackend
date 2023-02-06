@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Http\Request;
 
 class PokemonControllerTest extends TestCase
 {
@@ -23,7 +24,8 @@ class PokemonControllerTest extends TestCase
         $controllerMock = $this->createMock(PokemonController::class);
         $controllerMock->method('list')->willReturn($paginator);
 
-        $result = $controllerMock->list();
+        $request = new Request();
+        $result = $controllerMock->list($request);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $result);
         $this->assertEquals(10, $result->total());
