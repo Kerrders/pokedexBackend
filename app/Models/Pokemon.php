@@ -106,8 +106,13 @@ class Pokemon extends Model
         if (!count($types)) {
             return $query;
         }
-        return $query->whereHas('types', function ($typeQuery) use($types){
-            $typeQuery->whereIn('type_id', $types);
-        });
+
+        foreach ($types as $type) {
+            $query->whereHas('types', function ($typeQuery) use($type) {
+                $typeQuery->where('type_id', $type);
+            });
+        }
+
+        return $query;
     }
 }
