@@ -65,6 +65,9 @@ To get started with the API, follow these steps:
 | --------- | ------ | -------- | -------------------------------------------------- |
 | id        | int    | required | The ID of the evolution chain to show.            |
 
+---
+
+### GET /typeEffectiveness
 
 ## Contributing
 We welcome contributions to this project, whether it's fixing bugs, improving existing features, or adding new ones. If you're interested in contributing, please open a pull request and we'll be happy to review and merge your changes.
