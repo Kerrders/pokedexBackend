@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Helpers\PokemonTypeHelper;
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,8 @@ class Pokemon extends Model
 	protected $table = 'pokemon';
 	public $incrementing = false;
 	public $timestamps = false;
+    protected $appends = ['typeEffectiveness'];
+
 
 	protected $casts = [
 		'id' => 'int',
@@ -114,5 +117,9 @@ class Pokemon extends Model
         }
 
         return $query;
+    }
+
+    public function getTypeEffectivenessAttribute() {
+        return PokemonTypeHelper::calculateEffectivenessForType($this->types[0]->type_id, $this->types[1]->type_id ?? null);
     }
 }

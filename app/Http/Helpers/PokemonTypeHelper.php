@@ -4,22 +4,22 @@ namespace App\Http\Helpers;
 
 class PokemonTypeHelper {
   const NORMAL = 1;
-  const FIRE = 2;
-  const WATER = 3;
-  const ELECTRIC = 4;
-  const GRASS = 5;
-  const ICE = 6;
-  const FIGHTING = 7;
-  const POISON = 8;
-  const GROUND = 9;
-  const FLYING = 10;
-  const PSYCHIC = 11;
-  const BUG = 12;
-  const ROCK = 13;
-  const GHOST = 14;
-  const DRAGON = 15;
-  const DARK = 16;
-  const STEEL = 17;
+  const FIGHTING = 2;
+  const FLYING = 3;
+  const POISON = 4;
+  const GROUND = 5;
+  const ROCK = 6;
+  const BUG = 7;
+  const GHOST = 8;
+  const STEEL = 9;
+  const FIRE = 10;
+  const WATER = 11;
+  const GRASS = 12;
+  const ELECTRIC = 13;
+  const PSYCHIC = 14;
+  const ICE = 15;
+  const DRAGON = 16;
+  const DARK = 17;
   const FAIRY = 18;
 
   public static $weaknessTypeChart = [
@@ -78,13 +78,13 @@ class PokemonTypeHelper {
 
       switch (true) {
         case $damageMultiplier > 1:
-          $result['strong'][] = $type;
+          $result['weak'][] = $type;
           break;
         case $damageMultiplier === 1:
           $result['neutral'][] = $type;
           break;
         case $damageMultiplier < 1:
-          $result['weak'][] = $type;
+          $result['strong'][] = $type;
           break;
       }
     }
