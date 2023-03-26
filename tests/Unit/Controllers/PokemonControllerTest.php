@@ -15,6 +15,7 @@ class PokemonControllerTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
+    /** @test */
     public function testList()
     {
         $pokemon = Pokemon::factory()->count(10)->make();
@@ -31,6 +32,7 @@ class PokemonControllerTest extends TestCase
         $this->assertEquals(10, $result->total());
     }
 
+    /** @test */
     public function testShow()
     {
         $pokemon = Pokemon::factory()->make();

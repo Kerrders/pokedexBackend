@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pokemon;
 use App\Models\PokemonEvolution;
 use App\Models\PokemonSpecy;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class EvolutionController extends Controller
 {

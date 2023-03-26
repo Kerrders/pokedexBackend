@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PokemonSpecy extends Model
 {
+    use HasFactory;
     use Cachable;
 
 	protected $table = 'pokemon_species';

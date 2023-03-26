@@ -30,5 +30,5 @@ class PokemonController extends Controller
 
     public function show(string $identifier): Pokemon {
         return Pokemon::with(['species.evolution', 'speciesNames', 'moves.names', 'stats', 'types'])->where('identifier', '=', $identifier)->firstOrFail();
-    }
+      }
 }

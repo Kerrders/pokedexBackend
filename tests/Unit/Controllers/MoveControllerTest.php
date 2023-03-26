@@ -13,6 +13,7 @@ class MoveControllerTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
+    /** @test */
     public function testList()
     {
         $moves = Move::factory()->count(10)->make();
@@ -25,6 +26,7 @@ class MoveControllerTest extends TestCase
         $this->assertEquals(10, $result->count());
     }
 
+    /** @test */
     public function testShow()
     {
         $move = Move::factory()->make();
