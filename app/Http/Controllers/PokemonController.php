@@ -19,12 +19,16 @@ class PokemonController extends Controller
         ]);
 
         $langId = $validatedData['langId'] ?? PokemonController::DEFAULT_LANGUAGE_ID;
-        $name = $request->get('name', null);
+        $name = $request->input('name');
         $typeIds = $validatedData['typeIds'] ?? [];
         $perPage = (int) ($validatedData['perPage'] ?? 50);
         $perPage = min(200, max(1, $perPage));
 
-        $query = Pokemon::with(['speciesNames', 'types'])->whereNameLike($name)->whereLanguageId($langId)->whereTypeIn($typeIds);
+        $query = Pokemon::with(['speciesNames', 'types'])
+            ->whereNameLike($name)
+            ->whereLanguageId($langId)
+            ->whereTypeIn($typeIds);
+
         return $query->paginate($perPage);
     }
 

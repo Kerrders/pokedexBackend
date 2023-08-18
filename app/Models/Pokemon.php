@@ -106,17 +106,13 @@ class Pokemon extends Model
     }
 
     public function scopeWhereTypeIn($query, $types) {
-        if (!count($types)) {
+        if (empty($types)) {
             return $query;
         }
 
-        foreach ($types as $type) {
-            $query->whereHas('types', function ($typeQuery) use($type) {
-                $typeQuery->where('type_id', $type);
-            });
-        }
-
-        return $query;
+        return $query->whereHas('types', function ($typeQuery) use ($types) {
+            $typeQuery->whereIn('type_id', $types);
+        });
     }
 
     public function getTypeEffectivenessAttribute() {
