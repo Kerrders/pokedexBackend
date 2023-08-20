@@ -6,6 +6,7 @@ use App\Http\Helpers\PokemonTypeHelper;
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Pokemon
@@ -115,7 +116,19 @@ class Pokemon extends Model
         });
     }
 
-    public function getTypeEffectivenessAttribute() {
-        return PokemonTypeHelper::calculateEffectivenessForType($this->types[0]->type_id, $this->types[1]->type_id ?? null);
+    public function getTypeEffectivenessAttribute()
+    {
+        $type1 = $this->types->first();
+        $type2 = $this->types->get(1) ?? null;
+        $cacheKey = 'typeEffectiveness_' . $type1->type_id;
+
+        if ($type2) {
+            $cacheKey .= '_' . $type2->type_id;
+        }
+
+        return Cache::rememberForever($cacheKey, function () use ($type1, $type2) {
+            return PokemonTypeHelper::calculateEffectivenessForType($type1->type_id, $type2 ? $type2->type_id : null);
+        });
     }
+
 }
