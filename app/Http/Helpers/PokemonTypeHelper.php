@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 namespace App\Http\Helpers;
 
@@ -25,102 +25,115 @@ class PokemonTypeHelper
 
     public static $weaknessTypeChart = [
         self::NORMAL => [self::ROCK, self::STEEL],
-        self::FIRE => [self::WATER, self::GROUND, self::ROCK],
-        self::WATER => [self::GRASS, self::ELECTRIC],
-        self::ELECTRIC => [self::GROUND],
-        self::GRASS => [self::FIRE, self::ICE, self::POISON, self::FLYING, self::BUG],
-        self::ICE => [self::FIRE, self::FIGHTING, self::ROCK, self::STEEL],
-        self::FIGHTING => [self::PSYCHIC, self::FLYING, self::FAIRY],
+        self::FIGHTING => [self::FLYING, self::FAIRY],
+        self::FLYING => [self::ELECTRIC, self::ICE, self::ROCK],
         self::POISON => [self::GROUND, self::PSYCHIC],
         self::GROUND => [self::WATER, self::GRASS, self::ICE],
-        self::FLYING => [self::ELECTRIC, self::ICE, self::ROCK],
-        self::PSYCHIC => [self::BUG, self::GHOST, self::DARK],
-        self::BUG => [self::FIRE, self::FLYING, self::ROCK],
         self::ROCK => [self::WATER, self::GRASS, self::FIGHTING, self::GROUND, self::STEEL],
+        self::BUG => [self::FIRE, self::FLYING, self::ROCK],
         self::GHOST => [self::GHOST, self::DARK],
+        self::STEEL => [self::FIRE, self::FIGHTING, self::GROUND, self::FAIRY],
+        self::FIRE => [self::WATER, self::GRASS, self::ROCK],
+        self::WATER => [self::ELECTRIC, self::GRASS],
+        self::GRASS => [self::FIRE, self::ICE, self::POISON, self::FLYING, self::BUG],
+        self::ELECTRIC => [self::GROUND],
+        self::PSYCHIC => [self::BUG, self::GHOST, self::DARK],
+        self::ICE => [self::FIRE, self::FIGHTING, self::ROCK, self::STEEL],
         self::DRAGON => [self::ICE, self::DRAGON, self::FAIRY],
-        self::DARK => [self::FIGHTING, self::BUG, self::FAIRY],
-        self::STEEL => [self::FIRE, self::FIGHTING, self::GROUND],
+        self::DARK => [self::FIGHTING, self::FAIRY],
         self::FAIRY => [self::POISON, self::STEEL],
     ];
 
-    public static $immuneTypeChart = [
+    public static $resistanceTypeChart = [
         self::NORMAL => [],
-        self::FIRE => [],
-        self::WATER => [],
-        self::ELECTRIC => [],
-        self::GRASS => [],
-        self::ICE => [],
+        self::FIGHTING => [self::BUG, self::GRASS],
+        self::FLYING => [self::GROUND, self::ROCK],
+        self::POISON => [self::POISON, self::GROUND],
+        self::GROUND => [self::POISON, self::ROCK, self::STEEL],
+        self::ROCK => [self::NORMAL, self::FLYING, self::POISON],
+        self::BUG => [self::GRASS, self::FLYING],
+        self::GHOST => [self::NORMAL],
+        self::STEEL => [self::NORMAL, self::FIRE, self::WATER, self::ELECTRIC, self::FAIRY],
+        self::FIRE => [self::GROUND, self::ROCK],
+        self::WATER => [self::FIRE, self::ELECTRIC],
+        self::GRASS => [self::GROUND, self::WATER, self::FLYING],
+        self::ELECTRIC => [self::GROUND],
+        self::PSYCHIC => [self::FIGHTING],
+        self::ICE => [self::FIRE, self::WATER, self::STEEL],
+        self::DRAGON => [self::STEEL],
+        self::DARK => [self::FIGHTING, self::FAIRY],
+        self::FAIRY => [self::STEEL, self::FIRE],
+    ];
+
+    public static $immunityTypeChart = [
+        self::NORMAL => [self::GHOST],
         self::FIGHTING => [self::GHOST],
+        self::FLYING => [],
         self::POISON => [self::STEEL],
         self::GROUND => [self::FLYING],
-        self::FLYING => [self::GROUND],
-        self::PSYCHIC => [],
-        self::BUG => [],
         self::ROCK => [],
+        self::BUG => [],
         self::GHOST => [self::NORMAL],
+        self::STEEL => [],
+        self::FIRE => [],
+        self::WATER => [],
+        self::GRASS => [],
+        self::ELECTRIC => [self::GROUND],
+        self::PSYCHIC => [self::DARK],
+        self::ICE => [],
         self::DRAGON => [self::FAIRY],
         self::DARK => [],
-        self::STEEL => [],
         self::FAIRY => [],
     ];
 
-    public static function calculateDamage($attackerType, $defenderType, $defenderType2 = null)
+
+    public static function getWeaknesses($type)
     {
-        $damageMultiplier = 1;
-
-        $getDamageMultiplier = function ($defenderType) use ($attackerType) {
-            switch (true) {
-                case in_array($attackerType, self::$weaknessTypeChart[$defenderType]):
-                    return 2;
-                case in_array($defenderType, self::$weaknessTypeChart[$attackerType]):
-                    return 0.5;
-                default:
-                    return 1;
-            }
-        };
-
-        $damageMultiplier = $getDamageMultiplier($defenderType);
-        if ($defenderType2) {
-            $damageMultiplier *= $getDamageMultiplier($defenderType2);
-        }
-
-        return $damageMultiplier;
+        return self::$weaknessTypeChart[$type];
     }
-    public static function calculateEffectivenessForType($defenderType, $defenderType2 = null)
+
+    public static function getResistances($type)
     {
-        $result = [
-            'neutral' => [],
-            'strong' => [],
-            'weak' => [],
-        ];
+        return self::$resistanceTypeChart[$type];
+    }
 
+    public static function getImmunities($type)
+    {
+        return self::$immunityTypeChart[$type];
+    }
+
+    public static function calculateEffectivenessForType($defendType1, $defendType2 = null)
+    {
+        $result = [];
         $weaknessTypeChartKeys = array_keys(self::$weaknessTypeChart);
-        foreach ($weaknessTypeChartKeys as $type) {
-            $damageMultiplier = self::calculateDamage($type, $defenderType, $defenderType2);
 
-            switch (true) {
-                case $damageMultiplier > 1:
-                    if (in_array($type, self::$weaknessTypeChart[$defenderType]) || ($defenderType2 && in_array($type, self::$weaknessTypeChart[$defenderType2]))) {
-                        // Check immunity
-                        if (!in_array($type, self::$immuneTypeChart[$defenderType]) && ($defenderType2 === null || !in_array($type, self::$immuneTypeChart[$defenderType2]))) {
-                            $result['weak'][] = $type;
-                        }
-                    } else {
-                        $result['strong'][] = $type;
-                    }
-                    break;
+        foreach ($weaknessTypeChartKeys as $attackType) {
+            $multiplier1 = self::calculateTypeMultiplier($attackType, $defendType1);
+            $multiplier2 = ($defendType2) ? self::calculateTypeMultiplier($attackType, $defendType2) : 1;
 
-                case $damageMultiplier === 1:
-                    $result['neutral'][] = $type;
-                    break;
+            $damage = $multiplier1 * $multiplier2;
 
-                case $damageMultiplier < 1:
-                    $result['strong'][] = $type;
-                    break;
-            }
+            $result[] = [
+                'typeId' => $attackType,
+                'damage' => $damage,
+            ];
         }
 
         return $result;
+    }
+
+    private static function calculateTypeMultiplier($attackType, $defendType)
+    {
+        $multiplier = 1;
+
+        if (in_array($attackType, self::$weaknessTypeChart[$defendType])) {
+            $multiplier *= 2; // Super effective
+        } elseif (in_array($attackType, self::$resistanceTypeChart[$defendType]) || $defendType === $attackType) {
+            $multiplier *= 0.5; // Weak against
+        } elseif (in_array($attackType, self::$immunityTypeChart[$defendType])) {
+            $multiplier = 0; // Immunity
+        }
+
+        return $multiplier;
     }
 }
