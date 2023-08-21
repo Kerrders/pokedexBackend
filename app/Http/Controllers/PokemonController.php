@@ -24,10 +24,13 @@ class PokemonController extends Controller
         $perPage = (int) ($validatedData['perPage'] ?? 50);
         $perPage = min(200, max(1, $perPage));
 
-        $query = Pokemon::with(['speciesNames', 'types'])
-            ->whereNameLike($name)
-            ->whereLanguageId($langId)
-            ->whereTypeIn($typeIds);
+        $query = Pokemon::with(['speciesNames', 'types'])->whereLanguageId($langId)
+            ->when($name, function ($query) use ($name) {
+                return $query->whereNameLike($name);
+            })
+            ->when(!empty($typeIds), function ($query) use ($typeIds) {
+                return $query->whereTypeIn($typeIds);
+            });
 
         return $query->paginate($perPage);
     }

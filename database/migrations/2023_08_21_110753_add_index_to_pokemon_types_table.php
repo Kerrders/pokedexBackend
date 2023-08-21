@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('pokemon_species_names', function (Blueprint $table) {
-            $table->index('name');
-            $table->index('pokemon_species_id');
+        Schema::table('pokemon_types', function (Blueprint $table) {
+            $table->index('pokemon_id');
         });
     }
 
@@ -26,9 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('pokemon_species_names', function (Blueprint $table) {
-            $table->dropIndex(['name']);
-            $table->dropIndex(['pokemon_species_id']);
+        Schema::table('pokemon_types', function (Blueprint $table) {
+            $table->dropIndex(['pokemon_id']);
         });
     }
 };
