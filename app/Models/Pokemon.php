@@ -111,8 +111,12 @@ class Pokemon extends Model
             return $query;
         }
 
-        return $query->whereHas('types', function ($typeQuery) use ($types) {
-            $typeQuery->whereIn('type_id', $types);
+        return $query->where(function ($typeQuery) use ($types) {
+            foreach ($types as $type) {
+                $typeQuery->whereHas('types', function ($nestedQuery) use ($type) {
+                    $nestedQuery->where('type_id', $type);
+                });
+            }
         });
     }
 
