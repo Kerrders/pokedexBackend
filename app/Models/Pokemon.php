@@ -91,6 +91,11 @@ class Pokemon extends Model
         return $this->hasMany(PokemonType::class, 'pokemon_id', 'id');
     }
 
+    public function encounters()
+    {
+        return $this->hasMany(PokemonEncounter::class, 'pokemon_id', 'id');
+    }
+
     public function scopeWhereNameLike($query, $name) {
         if(!$name) {
             return $query;
