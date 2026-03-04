@@ -5,7 +5,7 @@ A RESTful API, built with Laravel, that provides the data for the Pokedex web ap
 
 ## Prerequisites
 - PHP 8.0 or higher
-- Laravel 9.x
+- Laravel 12.x
 - MySQL or any other supported database management system
 
 ## Installation
