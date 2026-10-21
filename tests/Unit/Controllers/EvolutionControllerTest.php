@@ -3,6 +3,7 @@
 namespace Tests\Unit\Controllers;
 
 use App\Http\Controllers\EvolutionController;
+use App\Models\EvolutionTriggerProse;
 use App\Models\PokemonEvolution;
 use App\Models\PokemonSpecy;
 use Illuminate\Support\Collection;
@@ -36,5 +37,39 @@ class EvolutionControllerTest extends TestCase
 
         $this->assertEquals($pokemonSpecy2->id, $result[1]->id);
         $this->assertEquals(1, $result[1]->evolution_chain_id);
+    }
+
+    /** @test */
+    public function itLoadsOnlyGermanAndEnglishEvolutionTriggerTranslations()
+    {
+        $pokemonSpecy = PokemonSpecy::factory()->create(['evolution_chain_id' => 1]);
+        EvolutionTriggerProse::create([
+            'evolution_trigger_id' => 1,
+            'local_language_id' => 6,
+            'name' => 'Levelaufstieg',
+        ]);
+        EvolutionTriggerProse::create([
+            'evolution_trigger_id' => 1,
+            'local_language_id' => 9,
+            'name' => 'Level up',
+        ]);
+        EvolutionTriggerProse::create([
+            'evolution_trigger_id' => 1,
+            'local_language_id' => 1,
+            'name' => 'レベルアップ',
+        ]);
+        PokemonEvolution::factory()->create([
+            'evolved_species_id' => $pokemonSpecy->id,
+            'evolution_trigger_id' => 1,
+        ]);
+
+        $result = app(EvolutionController::class)->show(1);
+        $evolution = $result->first()->evolution;
+
+        $this->assertEquals(1, $evolution->evolution_trigger_id);
+        $this->assertEquals(
+            [6 => 'Levelaufstieg', 9 => 'Level up'],
+            $evolution->evolutionTriggerProse->pluck('name', 'local_language_id')->all()
+        );
     }
 }

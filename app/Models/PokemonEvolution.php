@@ -6,6 +6,7 @@ use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class PokemonEvolution
@@ -118,5 +119,10 @@ class PokemonEvolution extends Model
 	public function evolutionTrigger(): BelongsTo
 	{
 		return $this->belongsTo(EvolutionTrigger::class, 'evolution_trigger_id', 'id');
+	}
+
+	public function evolutionTriggerProse(): HasMany
+	{
+		return $this->hasMany(EvolutionTriggerProse::class, 'evolution_trigger_id', 'evolution_trigger_id');
 	}
 }
