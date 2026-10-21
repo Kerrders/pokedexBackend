@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $pokemon_move_method_id
  * @property int $level
  * @property int $order
+ * @property int $mastery
  *
  * @package App\Models
  */
@@ -31,7 +32,8 @@ class PokemonMove extends Model
 		'move_id' => 'int',
 		'pokemon_move_method_id' => 'int',
 		'level' => 'int',
-		'order' => 'int'
+		'order' => 'int',
+		'mastery' => 'int'
 	];
 
 	protected $fillable = [
@@ -40,7 +42,8 @@ class PokemonMove extends Model
 		'move_id',
 		'pokemon_move_method_id',
 		'level',
-		'order'
+		'order',
+		'mastery'
 	];
 
     /**

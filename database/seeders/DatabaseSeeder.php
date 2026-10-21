@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Http\Interfaces\CsvRepositoryInterface;
 use App\Models\LocationArea;
 use App\Models\LocationName;
+use App\Models\EvolutionTrigger;
+use App\Models\EvolutionTriggerProse;
 use App\Models\Move;
 use App\Models\MoveName;
 use App\Models\Pokemon;
@@ -33,6 +35,8 @@ class DatabaseSeeder extends Seeder
         "moves" => Move::class,
         "move_names" => MoveName::class,
         "pokemon_evolution" => PokemonEvolution::class,
+        "evolution_triggers" => EvolutionTrigger::class,
+        "evolution_trigger_prose" => EvolutionTriggerProse::class,
         "pokemon_stats" => PokemonStat::class,
         "pokemon_types" => PokemonType::class,
         "encounters" => PokemonEncounter::class,
