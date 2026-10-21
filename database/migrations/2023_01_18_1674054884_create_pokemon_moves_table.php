@@ -15,6 +15,7 @@ class CreatePokemonMovesTable extends Migration
             $table->integer('pokemon_move_method_id')->nullable();
             $table->integer('level')->nullable();
             $table->integer('order')->nullable();
+			$table->integer('mastery')->nullable();
         });
     }
 
